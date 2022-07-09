@@ -5,7 +5,6 @@ const Users = () => {
   const [users, setUsers] = useState(api.users.fetchAll());
 
   const handleDelete = (userId) => {
-    console.log(userId);
     setUsers(prevState=>prevState.filter(user=>user._id !== userId));
   };
 
@@ -15,10 +14,13 @@ const Users = () => {
 
     if (number) {
       let phraseNoun = 'человека';
+      
       phraseBg = 'bg-primary';
+      
       if (number === 1 || number % 10 === 0 || (number >= 5 && number <= 19)) {
         phraseNoun = 'человек';
       }
+      
       phrase = `${number} ${phraseNoun} тусанет с тобой`;
     }
 
@@ -30,7 +32,7 @@ const Users = () => {
       <h2>
         {renderPhrase(users.length)}
       </h2>
-      {users.length !== 0?(
+      {users.length > 0 && (
         <table className="table">
           <thead>
             <tr>
@@ -43,8 +45,8 @@ const Users = () => {
             </tr>
           </thead>
           <tbody>
-            {users.length !==0? users.map(user=>(
-              <tr>
+            {users.map(user=>( // нет смысла проверки
+              <tr> // нужен key
                 <td scope="row">{user.name}</td>
                 <td>{user.qualities.map(
                   quality=>(
@@ -58,10 +60,10 @@ const Users = () => {
                 <td>{`${user.rate} /5`}</td>
                 <td><button className="btn btn-danger" onClick={() => handleDelete(user._id)}>delete</button></td>
               </tr>
-            )):1}
+            ))}
           </tbody>
         </table>
-      ):<></>}
+      )}
     </>
   )
 }
