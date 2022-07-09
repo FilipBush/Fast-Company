@@ -45,12 +45,12 @@ const Users = () => {
             </tr>
           </thead>
           <tbody>
-            {users.map(user=>( // нет смысла проверки
-              <tr> // нужен key
+            {users.map(user=>(
+              <tr key={user._id}>
                 <td scope="row">{user.name}</td>
                 <td>{user.qualities.map(
                   quality=>(
-                    <span className={`badge bg-${quality.color} m-1`}>
+                    <span key={quality._id} className={`badge bg-${quality.color} m-1`}>
                       {quality.name}
                     </span>
                   )
