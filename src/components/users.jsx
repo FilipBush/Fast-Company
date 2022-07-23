@@ -1,10 +1,10 @@
 import React from "react";
 import User from "./user";
 
-const Users = (props) => {
+const Users = ({users, ...rest}) => {
   return (
     <>
-      {props.users.length > 0 && (
+      {users.length > 0 && (
         <table className="table">
           <thead>
             <tr>
@@ -18,12 +18,11 @@ const Users = (props) => {
             </tr>
           </thead>
           <tbody>
-            {props.users.map(user=>(
+            {users.map((user) => (
               <User
                 key = {user._id}
+                {...rest}
                 {...user}
-                onDelete = {props.onDelete}
-                onBookMark = {props.onBookMark}
               />
             ))}
           </tbody>
