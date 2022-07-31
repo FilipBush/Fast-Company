@@ -46,7 +46,7 @@ User.propTypes = {
     _id: PropTypes.string,
     name: PropTypes.string,
     qualities: PropTypes.array,
-    profession: PropTypes.object,
+    profession: PropTypes.oneOfType([PropTypes.object, PropTypes.array]),
     completedMeetings: PropTypes.number,
     rate: PropTypes.number,
     onDelete: PropTypes.func,
