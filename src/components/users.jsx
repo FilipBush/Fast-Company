@@ -9,8 +9,8 @@ import SearchStatus from "./searchStatus";
 
 const Users = ({ users: allUsers, ...rest }) => {
     const [currentPage, setCurrentPage] = useState(1);
-    const [professions, setProfession] = useState();
-    const [selectedProf, setSelectedProf] = useState();
+    const [professions, setProfession] = useState(); // useState([])
+    const [selectedProf, setSelectedProf] = useState(); // useState(null) стаарйся всегда задавать начальное значение
     const pageSize = 4;
 
     useEffect(() => {
@@ -20,11 +20,12 @@ const Users = ({ users: allUsers, ...rest }) => {
     }, []);
 
     useEffect(() => {
-        setCurrentPage(1);
+        setCurrentPage(1); // лучше перенеси в handleProfessionSelect
     }, [selectedProf]);
 
     const handleProfessionSelect = (item) => {
         setSelectedProf(item);
+        setCurrentPage(1); // вот так будет лучше
     };
 
     const handlePageChange = (pageIndex) => {
@@ -32,7 +33,7 @@ const Users = ({ users: allUsers, ...rest }) => {
     };
 
     const filterUsers = selectedProf
-        ? allUsers.filter(user => JSON.stringify(user.profession) === JSON.stringify(selectedProf))
+        ? allUsers.filter(user => JSON.stringify(user.profession) === JSON.stringify(selectedProf)) // тут можно куда проще user.profession._id === selectedProf._id
         : allUsers;
 
     const count = filterUsers ? filterUsers.length : 0;
