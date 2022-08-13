@@ -2,18 +2,16 @@ import React, { useState, useEffect } from "react";
 import PropTypes from "prop-types";
 import { paginate } from "../utils/paginate";
 import Pagination from "./pagination";
-// import User from "./user";
 import api from "../api";
 import GroupList from "./groupList";
 import SearchStatus from "./searchStatus";
 import UserTable from "./usersTable";
 import _ from "lodash";
-
 const Users = () => {
     const [currentPage, setCurrentPage] = useState(1);
     const [professions, setProfession] = useState();
     const [selectedProf, setSelectedProf] = useState();
-    const [sortBy, setSortBy] = useState({ iter: "name", order: "asc" });
+    const [sortBy, setSortBy] = useState({ path: "name", order: "asc" });
     const pageSize = 8;
 
     const [users, setUsers] = useState();
@@ -36,6 +34,7 @@ const Users = () => {
     useEffect(() => {
         api.professions.fetchAll().then((data) => setProfession(data));
     }, []);
+
     useEffect(() => {
         setCurrentPage(1);
     }, [selectedProf]);
@@ -47,7 +46,6 @@ const Users = () => {
     const handlePageChange = (pageIndex) => {
         setCurrentPage(pageIndex);
     };
-
     const handleSort = (item) => {
         setSortBy(item);
     };
@@ -57,7 +55,7 @@ const Users = () => {
             ? users.filter(
                 (user) =>
                     JSON.stringify(user.profession) ===
-                  JSON.stringify(selectedProf)
+                      JSON.stringify(selectedProf)
             )
             : users;
 
@@ -82,7 +80,7 @@ const Users = () => {
                             onClick={clearFilter}
                         >
                             {" "}
-                        Очистить
+                            Очистить
                         </button>
                     </div>
                 )}
@@ -91,10 +89,10 @@ const Users = () => {
                     {count > 0 && (
                         <UserTable
                             users={usersCrop}
-                            selectedSort={sortBy}
                             onSort={handleSort}
-                            onDelete = {handleDelete}
-                            onToggleBookMark = {handleToggleBookMark}
+                            selectedSort={sortBy}
+                            onDelete={handleDelete}
+                            onToggleBookMark={handleToggleBookMark}
                         />
                     )}
                     <div className="d-flex justify-content-center">

@@ -1,7 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
-// import TableHeader from "./tableHeader";
-// import TableBody from "./tableBody";
+
 import BookMark from "./bookmark";
 import QualitiesList from "./qualitiesList";
 import Table from "./table";
@@ -16,10 +15,13 @@ const UserTable = ({
 }) => {
     const columns = {
         name: { path: "name", name: "Имя" },
-        qualities: { name: "Качества", component: (user) => (<QualitiesList qualities={ user.qualities}/>) },
+        qualities: {
+            name: "Качества",
+            component: (user) => <QualitiesList qualities={user.qualities} />
+        },
         professions: { path: "profession.name", name: "Профессия" },
         completedMeetings: {
-            path: "completedMeetings.name",
+            path: "completedMeetings",
             name: "Встретился, раз"
         },
         rate: { path: "rate", name: "Оценка" },
@@ -44,11 +46,10 @@ const UserTable = ({
             )
         }
     };
-
     return (
         <Table
-            onSort = {onSort}
-            selectedSort = {selectedSort}
+            onSort={onSort}
+            selectedSort={selectedSort}
             columns={columns}
             data={users}
         />
@@ -56,11 +57,11 @@ const UserTable = ({
 };
 
 UserTable.propTypes = {
-    users: PropTypes.array.isRequred,
-    onSort: PropTypes.func.isRequred,
-    selectedSort: PropTypes.object.isRequred,
-    onToggleBookMark: PropTypes.func.isRequred,
-    onDelete: PropTypes.func.isRequred
+    users: PropTypes.array.isRequired,
+    onSort: PropTypes.func.isRequired,
+    selectedSort: PropTypes.object.isRequired,
+    onToggleBookMark: PropTypes.func.isRequired,
+    onDelete: PropTypes.func.isRequired
 };
 
 export default UserTable;
