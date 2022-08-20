@@ -1,47 +1,22 @@
 import React from "react";
-import Users from "./components/users";
+import NavBar from "./components/navBar";
+import Users from "./components/layouts/users";
+import { Switch, Route } from "react-router-dom";
+import Main from "./components/layouts/main";
+import Login from "./components/layouts/login";
 
 function App() {
     return (
-        <Users />
+        <div className="d-flex flex-column align-items-center">
+            <NavBar />
+            <Switch>
+                <Route exact path="/users/:userId?" component={Users}/>
+                <Route exact path="/main" component={Main}/>
+                <Route exact path="/login" component={Login}/>
+                <Route component={Main}/>
+            </Switch>
+        </div>
     );
 }
 
 export default App;
-
-// import React, { useState, useEffect } from "react";
-// import Users from "./components/users";
-
-// import api from "./api";
-
-// function App() {
-//     const [users, setUsers] = useState();
-//     useEffect(() => {
-//         api.users.fetchAll().then((data) => setUsers(data));
-//     }, []);
-//     const handleDelete = (userId) => {
-//         setUsers(users.filter((user) => user._id !== userId));
-//     };
-//     const handleToggleBookMark = (id) => {
-//         const newArray = users.map((user) => {
-//             if (user._id === id) {
-//                 return { ...user, bookmark: !user.bookmark };
-//             }
-//             return user;
-//         });
-//         setUsers(newArray);
-//     };
-//     return (
-//         <div>
-//             {users && (
-//                 <Users
-//                     onDelete={handleDelete}
-//                     onToggleBookMark={handleToggleBookMark}
-//                     users={users}
-//                 />
-//             )}
-//         </div>
-//     );
-// }
-
-// export default App;

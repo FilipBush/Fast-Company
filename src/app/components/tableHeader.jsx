@@ -1,49 +1,46 @@
 import React from "react";
 import PropTypes from "prop-types";
+
 const TableHeader = ({ onSort, selectedSort, columns }) => {
     const handleSort = (item) => {
-        if (selectedSort.path === item) {
-            onSort({
-                ...selectedSort,
-                order: selectedSort.order === "asc" ? "desc" : "asc"
-            });
+        if (selectedSort.path === item.path) {
+            onSort(({ ...selectedSort, order: selectedSort.order === "asc" ? "desc" : "asc" }));
         } else {
-            onSort({ path: item, order: "asc" });
+            onSort({ path: item.path, order: "asc" });
         }
     };
-    const renderSortArrow = (selectedSort, currentPath) => {
-        if (selectedSort.path === currentPath) {
-            if (selectedSort.order === "asc") {
-                return <i className="bi bi-caret-down-fill"></i>;
-            } else {
-                return <i className="bi bi-caret-up-fill"></i>;
-            }
+
+    const toggleCaret = (path) => {
+        const classes = "bi ms-1 bi-caret-";
+
+        if (selectedSort.path === path) {
+            return <i className={classes + (selectedSort.order === "asc" ? "up-fill" : "down-fill")} />;
         }
-        return null;
     };
 
     return (
         <thead>
             <tr>
-                {Object.keys(columns).map((column) => (
+                {Object.keys(columns).map(column => (
                     <th
                         key={column}
                         onClick={
                             columns[column].path
-                                ? () => handleSort(columns[column].path)
+                                ? () => handleSort(columns[column])
                                 : undefined
                         }
                         {...{ role: columns[column].path && "button" }}
                         scope="col"
                     >
-                        {columns[column].name}{" "}
-                        {renderSortArrow(selectedSort, columns[column].path)}
+                        {columns[column].name}
+                        {toggleCaret(columns[column].path)}
                     </th>
                 ))}
             </tr>
         </thead>
     );
 };
+
 TableHeader.propTypes = {
     onSort: PropTypes.func.isRequired,
     selectedSort: PropTypes.object.isRequired,
