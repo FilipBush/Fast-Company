@@ -1,4 +1,4 @@
-import { professions } from "./professions.api";
+import { professionsObject as professions } from "./professions.api";
 
 const qualities = {
     tedious: {
@@ -41,7 +41,7 @@ const users = [
         qualities: [qualities.tedious, qualities.uncertain, qualities.strange],
         completedMeetings: 36,
         rate: 2.5,
-        bookmark: true
+        bookmark: false
     },
     {
         _id: "67rdca3eeb7f6fgeed471816",
@@ -144,6 +144,20 @@ const users = [
     }
 ];
 
-export function fetchAll() {
-    return users;
-}
+const fetchAll = () =>
+    new Promise((resolve) => {
+        window.setTimeout(function () {
+            resolve(users);
+        }, 2000);
+    });
+
+const getById = (id) => new Promise((resolve) => {
+    window.setTimeout(function () {
+        resolve(users.find(user => user._id === id));
+    }, 2000);
+});
+
+export default {
+    fetchAll,
+    getById
+};
